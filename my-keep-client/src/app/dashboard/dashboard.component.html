@@ -1,0 +1,133 @@
+<div class="buttons1">
+    <div class="input-group">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" (click)="populate(gridster2)" title="Search by title, content, date">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+        <input type="text" class="form-control" placeholder="Search" (keydown)="searchIt($event, gridster2)" [(ngModel)]="search"> &nbsp;
+        <button mat-icon-button (click)="addWidgetWithoutData()" title="Add widget without data">
+            <mat-icon class="icon">add</mat-icon>
+        </button>
+        <button mat-icon-button (click)="removeAllWidgets()" title="Archive all widgtes">
+            <mat-icon class="icon">delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="populate(gridster2)" title="Refresh">
+            <mat-icon class="icon">refresh</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="omnibar">
+    <div *ngIf="!open" class="toolbar-closed">
+        <div class="form-group" (click)="onopen()" style="height: 50px;
+                position: relative;
+                font-size: 14px;
+                min-height: 50px;
+                min-width: 350px;
+                width: 600px;
+                margin: auto;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border-radius: 0;
+                outline: none;">
+            <input type="text" class="form-control" placeholder="Take a note..." style="height: 40px;
+                    min-height: 40px;
+                    min-height: 50px;
+                    min-width: 350px;
+                    box-sizing: border-box;
+                    outline: none;
+                    font-size: 18px;
+                    font-weight: 300;
+                    box-sizing: border-box;
+                    font-family: 'Roboto Slab','Times New Roman',serif;
+                    word-break: break-word;
+                    border: 0;
+                    border-radius: 0;">
+        </div>
+    </div>
+    <div *ngIf="open" class="toolbar-open">
+        <div class="form-group" (keydown)="addWidgetWithData($event)" style="height: 50px;
+                position: relative;
+                font-size: 14px;
+                min-height: 50px;
+                min-width: 350px;
+                width: 600px;
+                margin: auto;
+                padding-top: 10px;
+                outline: none;
+                padding-bottom: 10px;
+                border-radius: 0;">
+            <input type="text" class="form-control" style="height: 40px;
+                min-height: 40px;
+                min-height: 50px;
+                min-width: 350px;
+                font-family: 'Roboto Condensed',arial,sans-serif;
+                font-size: 17px;
+                font-weight: bold;
+                line-height: 23px;
+                padding: 15px 15px 0 15px;
+                border: 0;
+                border-radius: 0;
+                outline: none;" placeholder="Title" [(ngModel)]="title">
+            <textarea rows="5" class="form-control" style="height: 90px;
+                min-height: 90px;
+                box-sizing: border-box;
+                font-size: 18px;
+                font-weight: 300;
+                font-family: 'Roboto Slab','Times New Roman',serif;
+                word-break: break-word;
+                border: 0;
+                border-radius: 0;
+                outline: none;" placeholder="Take a note..." [(ngModel)]="content"></textarea>
+            <button class="form-control" style="height: 30px;
+                    min-height: 30px;
+                    text-align: right;
+                    margin-right: 0;
+                    border: 0;
+                    border-radius: 0;" (click)="onclose()">CLOSE</button>
+        </div>
+    </div>
+</div>
+<div class="main-content">
+    <ngx-gridster [options]="gridsterOptions" [draggableOptions]="gridsterDraggableOptions" (reflow)="onReflow($event)" (optionsChange)="optionsChange($event)"
+        #gridster2 class="dashboard">
+        <ngx-gridster-item *ngFor="let widget of notes; let indx = index" #itemComp [options]="itemOptions" [dragAndDrop]="widget.dragAndDrop"
+            [resizable]="widget.resizable" [(x)]="widget.x" [(y)]="widget.y" [(xSm)]="widget.xSm" [(ySm)]="widget.ySm" [(xMd)]="widget.xMd"
+            [(yMd)]="widget.yMd" [(xLg)]="widget.xLg" [(yLg)]="widget.yLg" [(xXl)]="widget.xXl" [(yXl)]="widget.yXl" [(w)]="widget.w"
+            [(h)]="widget.h" [(wSm)]="widget.wSm" [(hSm)]="widget.hSm" [(wMd)]="widget.wMd" [(hMd)]="widget.hMd" [(wLg)]="widget.wLg"
+            [(hLg)]="widget.hLg" [(wXl)]="widget.wXl" [(hXl)]="widget.hXl" (xSmChange)="xSmChange(widget, indx)" (ySmChange)="ySmChange(widget, indx)"
+            (hSmChange)="hSmChange(widget, indx)" (wSmChange)="wSmChange(widget, indx)" (xMdChange)="xMdChange(widget, indx)"
+            (yMdChange)="yMdChange(widget, indx)" (hMdChange)="hMdChange(widget, indx)" (wMdChange)="wMdChange(widget, indx)"
+            (xLgChange)="xLgChange(widget, indx)" (yLgChange)="yLgChange(widget, indx)" (hLgChange)="hLgChange(widget, indx)"
+            (wLgChange)="wLgChange(widget, indx)" (xXlChange)="xXlChange(widget, indx)" (yXlChange)="yXlChange(widget, indx)"
+            (hXlChange)="hXlChange(widget, indx)" (wXlChange)="wXlChange(widget, indx)" (change)="itemChange($event)">
+
+            <div class="panel-heading">
+                <div class="panel-title">{{ widget.title }}
+                    <a *ngIf="widget.dragAndDrop" (click)="pin(widget, gridster2)" class="pull-right" title="Pin it">
+                        <mat-icon class="icon">bookmark_border</mat-icon>
+                    </a>
+                    <a *ngIf="!widget.dragAndDrop" (click)="unpin(widget, gridster2)" class="pull-right" title="Unpin">
+                        <mat-icon class="icon">bookmark</mat-icon>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body" (click)="openDialog(widget, gridster2)" (mouseover)="onhover(widget)" (mouseleave)="onleave(widget)">
+                <small> {{widget.date | date: "dd.MM.y HH:mm"}}</small>
+                <br>
+                <div class="panel-content">{{ widget.content }}</div>
+                <div>
+                    <br>
+                </div>
+                <div *ngIf="widget.hover" class="panel-content-bottom">
+                    <a (click)="options($event, indx, gridster2)" class="pull-right">
+                        <mat-icon class="icon">more_vert</mat-icon>
+                    </a>
+                    <a (click)="remove(widget, indx)" class="pull-right" title="Archive">
+                        <mat-icon class="icon">archive</mat-icon>
+                    </a>
+                </div>
+            </div>
+        </ngx-gridster-item>
+    </ngx-gridster>
+</div>

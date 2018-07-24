@@ -1,0 +1,185 @@
+.form-group {
+  position: relative;
+  font-size: 14px;
+  margin: auto;
+  padding-top: 10px;
+  outline: none;
+  padding-bottom: 10px;
+  border-radius: 0;
+  width: 100%;
+}
+.form-group .form-control-title {
+                width: 580px;
+                font-family: 'Roboto Condensed',arial,sans-serif;
+                font-size: 17px;
+                font-weight: bold;
+                line-height: 23px;
+                word-break: break-word;
+                border: 0;
+                border-radius: 0;
+                outline: none;
+}
+.form-group .form-control {
+                font-size: 18px;
+                font-weight: 300;
+                font-family: 'Roboto Slab','Times New Roman',serif;
+                word-break: break-word;
+                border: 0;
+                border-radius: 0;
+                outline: none;
+}
+.form-group:focus {
+  border: none;
+}
+.form-group .form-control:focus {
+  border: none;
+}
+ .panel-heading {
+  /*border-bottom: 1px solid #F0F0F0;**/
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  top: 0;
+}
+.panel-heading .panel-title {
+  padding: 10px;
+  margin: 0;
+}
+
+.panel-body {
+  
+  overflow: auto;
+  width: 100%;
+  padding: 0 10px 10px;
+  position: relative;
+  top: 37px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+}
+.scroll {
+  overflow: auto;
+  width: 100%;
+  padding: 0 10px 10px;
+  position: relative;
+  height: 180px;
+  top: 15px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.gridster-item-prototype {
+  display: block;
+  background-color: #afafaf;
+  position: relative;
+  float: left;
+  z-index: 99;
+  text-align: center;
+  font-weight: bold;
+  margin: 0px;
+  width: 400px;
+  height: 250px;
+}
+
+.gridster-item-prototype.is-over .gridster-item-inner {
+ 
+  visibility: visible;
+}
+
+.gridster-item-prototype .gridster-item-inner {
+  position: absolute;
+  width: 600px;
+  height: 250px;
+  visibility: hidden;
+
+  -webkit-transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+  -moz-transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+  -o-transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.position-highlight .inner {
+  width: 600px;
+  height: 250px;
+  position: absolute;
+
+  background-color: #768294;
+ 
+
+}
+
+.gridster-item-inner {
+  width: 600px;
+  height: 250px;
+  position: inherit;
+  background: #fff;
+  
+}
+
+div small {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 10px;
+}
+
+.c-inline-editor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  text-decoration: none;
+  color: #428bca;
+  border-bottom: dashed 1px #428bca;
+  cursor: pointer;
+  line-height: 2;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.c-inline-editor.editable-empty,
+.c-inline-editor.editable-empty:hover,
+.c-inline-editor.editable-empty:focus,
+.c-inline-editor.a.editable-empty,
+.c-inline-editor.a.editable-empty:hover,
+.c-inline-editor.a.editable-empty:focus {
+  font-style: italic;
+  color: #DD1144;
+  text-decoration: none;
+}
+
+.c-inline-editor.inlineEditForm {
+  position: absolute;
+  overflow: scroll;
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
+}
+
+#inlineEditWrapper {
+  overflow: scroll;
+  display: inline-block;
+}
+
+.c-inline-editor.inlineEditForm input,
+.c-inline-editor.select {
+  width: auto;
+  display: inline;
+}
+
+.c-inline-editor.inline-editor-button-group {
+  display: inline-block;
+}
+
+.c-inline-editor.editInvalid {
+  color: #a94442;
+  margin-bottom: 0;
+}
+
+.c-inline-editor.error {
+  border-color: #a94442;
+}
+
+[hidden].c-inline-editor {
+  display: none;
+}

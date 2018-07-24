@@ -1,0 +1,34 @@
+<div class="buttons">
+    <button mat-icon-button (click)="restoreAll()" title="Restore all">
+        <mat-icon class="icon">restore_from_trash</mat-icon>
+    </button>
+    <button mat-icon-button (click)="trashAll()" title="Move to trash">
+        <mat-icon class="icon">delete</mat-icon>
+    </button>
+</div>
+<div class="main-content">
+    <ngx-gridster [options]="gridsterOptions" [draggableOptions]="gridsterDraggableOptions" (reflow)="onReflow($event)" (optionsChange)="optionsChange($event)"
+        #gridster2 class="dashboard">
+        <ngx-gridster-item *ngFor="let widget of archive; let indx = index" #itemComp [options]="itemOptions" [dragAndDrop]="widget.dragAndDrop"
+            [resizable]="widget.resizable" [(x)]="widget.x" [(y)]="widget.y" [(xSm)]="widget.xSm" [(ySm)]="widget.ySm" [(xMd)]="widget.xMd"
+            [(yMd)]="widget.yMd" [(xLg)]="widget.xLg" [(yLg)]="widget.yLg" [(xXl)]="widget.xXl" [(yXl)]="widget.yXl" [(w)]="widget.w"
+            [(h)]="widget.h" [(wSm)]="widget.wSm" [(hSm)]="widget.hSm" [(wMd)]="widget.wMd" [(hMd)]="widget.hMd" [(wLg)]="widget.wLg"
+            [(hLg)]="widget.hLg" [(wXl)]="widget.wXl" [(hXl)]="widget.hXl" (change)="itemChange($event)">
+            <div class="panel-heading">
+                <div class="panel-title">{{ widget.title }}
+                    <a (click)="trashIt(widget, indx)" class="pull-right" title="Move to trash">
+                        <mat-icon class="icon">delete</mat-icon>
+                    </a>
+                    <a (click)="restore(widget, indx)" class="pull-right" title="Restore">
+                        <mat-icon class="icon">restore_from_trash</mat-icon>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <small> {{widget.date | date: "dd.MM.y HH:mm"}}</small>
+                <br>
+                <div class="panel-content">{{ widget.content }}</div>
+            </div>
+        </ngx-gridster-item>
+    </ngx-gridster>
+</div>
