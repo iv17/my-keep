@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('archiveID', JSON.stringify(data.user.archiveDashboard.id));
       localStorage.setItem('trash', JSON.stringify(data.user.trashBashboard.widgets));
       localStorage.setItem('trashID', JSON.stringify(data.user.trashBashboard.id));
-    
+  
       this.router.navigateByUrl('/home/dashboard');
     });
   }

@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name = "widget")
+@Table(name = "widgets")
 public class Widget implements Serializable {
 
 	private static final long serialVersionUID = 8405975872512623038L;

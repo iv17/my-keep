@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,9 +29,11 @@ import rs.ac.uns.ftn.mykeepserver.security.TokenUtils;
 import rs.ac.uns.ftn.mykeepserver.service.DashboardService;
 import rs.ac.uns.ftn.mykeepserver.service.UserService;
 import rs.ac.uns.ftn.mykeepserver.service.validation.UserValidationService;
+import rs.ac.uns.ftn.mykeepserver.web.dto.ChangePasswordRequestDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.LoginRequestDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.LoginResponseDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.RegisterRequestDTO;
+import rs.ac.uns.ftn.mykeepserver.web.dto.UpdateUserRequestDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.UserDTO;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -67,7 +70,9 @@ public class UserController {
 
 	@RequestMapping(
 			value = "/register",
-			method = RequestMethod.POST
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE
 			)
 	public ResponseEntity<UserDTO> registration(@RequestBody RegisterRequestDTO request) {
 
@@ -113,8 +118,6 @@ public class UserController {
 			throw new NotFoundException("Wrong email or password!"); 
 		}
 
-
-
 	}
 
 	@RequestMapping(value = "/logout",
@@ -130,5 +133,57 @@ public class UserController {
 		}
 
 	}
+
+	@RequestMapping(
+			value = "/me",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE
+			)
+	public ResponseEntity<UserDTO> getMe(Authentication authentication) {
+
+		userValidationService.validateIfUserExist(authentication);
+
+		User user = userService.findByEmail(authentication.getName());
+
+		UserDTO response =  userConverter.convert(user);
+
+		return new ResponseEntity<UserDTO>(response, HttpStatus.OK);
+	}
+
+
+	@RequestMapping(
+			value = "/{id}",
+			method = RequestMethod.PATCH,
+			consumes = MediaType.APPLICATION_JSON_VALUE, 
+			produces = MediaType.APPLICATION_JSON_VALUE
+			)
+	public ResponseEntity<UserDTO> changePassword(@PathVariable int id, @RequestBody ChangePasswordRequestDTO request, Authentication authentication) {
+
+		userValidationService.validateIfUserExist(authentication);		
+		userValidationService.validateIfPasswordMatch(request.getNewPassword(), request.getRepeatedNewPassword());
+		
+		User user = userService.changePassword(id, request.getNewPassword());
+		UserDTO response =  userConverter.convert(user);
+
+		return new ResponseEntity<UserDTO>(response, HttpStatus.CREATED);
+	} 
+
+
+	@RequestMapping(
+			value = "/{id}",
+			method = RequestMethod.PUT
+			)
+	public ResponseEntity<UserDTO> update(@PathVariable int id, @RequestBody UpdateUserRequestDTO request, Authentication authentication) {
+
+		userValidationService.validateIfUserExist(authentication);
+
+		User user =  userConverter.convert(request);
+
+		User updatedUser = userService.update(id, user);
+
+		UserDTO response =  userConverter.convert(updatedUser);
+
+		return new ResponseEntity<UserDTO>(response, HttpStatus.CREATED);
+	} 
 
 }

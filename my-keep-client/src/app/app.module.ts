@@ -20,6 +20,9 @@ import { HomeComponent } from './home/home.component';
 import { HeaderInterceptor } from './header-interceptor';
 import { DashboardArchiveComponent } from './dashboard-archive/dashboard-archive.component';
 import { DashboardTrashComponent } from './dashboard-trash/dashboard-trash.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.component';
 
 const routes: Routes = [
   {
@@ -40,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: "change-password",
-    component: RegisterComponent
+    component: ChangePasswordComponent
   },
   {
     path: "home",
@@ -57,6 +60,14 @@ const routes: Routes = [
       {
         path: "trash",
         component: DashboardTrashComponent
+      },
+      {
+        path: "profile",
+        component: UserProfileComponent
+      },
+      {
+        path: "edit-profile",
+        component: UserProfileEditComponent
       }
     ]
   }
@@ -72,7 +83,10 @@ const routes: Routes = [
     DashboardComponent,
     WidgetUpdateComponent,
     DashboardArchiveComponent,
-    DashboardTrashComponent
+    DashboardTrashComponent,
+    ChangePasswordComponent,
+    UserProfileComponent,
+    UserProfileEditComponent
   ],
   imports: [
     BrowserModule,

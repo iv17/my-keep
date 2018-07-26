@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 816250384561263812L;
@@ -30,7 +30,7 @@ public class User implements Serializable {
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name = "email", unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
 	@Column(name = "password")

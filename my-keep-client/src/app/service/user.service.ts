@@ -26,6 +26,21 @@ export class UserService {
     };
     return this.http.post<LoginResponse>(`${this.baseUrl}/login`, user, options);
   }
+  changePassword(id: number, user): Observable<User> {
+    const options = {
+      headers: new HttpHeaders()
+    };
+    return this.http.patch<User>(`${this.baseUrl}/${id}`, user, options);
+  }
+  getMe(): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/me`);
+  }
+  update(id: number, user): Observable<User> {
+    const options = {
+      headers: new HttpHeaders()
+    };
+    return this.http.put<User>(`${this.baseUrl}/${id}`, user, options);
+  }
 
   logout(): Observable<any> {
     console.log('logout');

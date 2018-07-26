@@ -10,6 +10,7 @@ import rs.ac.uns.ftn.mykeepserver.model.User;
 import rs.ac.uns.ftn.mykeepserver.web.dto.LoginRequestDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.LoginResponseDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.RegisterRequestDTO;
+import rs.ac.uns.ftn.mykeepserver.web.dto.UpdateUserRequestDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.UserDTO;
 
 @Component
@@ -70,6 +71,7 @@ public class UserConverter {
 	
 	public UserDTO convert(User user) {
 		UserDTO dto = new UserDTO();
+		dto.setId(user.getId());
 		dto.setFirstName(user.getFirstName());
 		dto.setLastName(user.getLastName());
 		dto.setEmail(user.getEmail());
@@ -79,5 +81,13 @@ public class UserConverter {
 		dto.setTrashBashboard(dashboardConverter.convert(user.getTrashDashboard()));
 		
 		return dto;
+	}
+	//==================== UPDATE ====================
+	public User convert(UpdateUserRequestDTO dto) {
+		User user = new User();
+		user.setFirstName(dto.getFirstName());
+		user.setLastName(dto.getLastName());
+		
+		return user;
 	}
 }

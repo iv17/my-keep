@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import rs.ac.uns.ftn.mykeepserver.exceptions.BadRequestException;
 import rs.ac.uns.ftn.mykeepserver.exceptions.NotFoundException;
 import rs.ac.uns.ftn.mykeepserver.service.UserService;
 import rs.ac.uns.ftn.mykeepserver.service.validation.UserValidationService;
@@ -34,6 +35,20 @@ public class UserValidationServiceImpl implements UserValidationService {
 	public void validateIfEmailIsUnique(String email) {
 		if(userService.findByEmail(email) != null) {
 			throw new NotFoundException(exception);
+		}
+	}
+
+	@Override
+	public void validateIfUserExist(Authentication authentication, String password) {
+		if(userService.findByEmailAndPassword(authentication.getName(), password) == null) {
+			throw new NotFoundException(exception);
+		}
+	}
+
+	@Override
+	public void validateIfPasswordMatch(String password, String repeatedPassword) {
+		if(!password.equals(repeatedPassword)) {
+			throw new BadRequestException(exception);
 		}
 	}
 
