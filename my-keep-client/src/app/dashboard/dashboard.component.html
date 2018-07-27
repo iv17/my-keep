@@ -119,9 +119,9 @@
                 <div>
                     <br>
                 </div>
-                <div *ngIf="widget.hover" class="panel-content-bottom">
-                    <a (click)="options($event, indx, gridster2)" class="pull-right">
-                        <mat-icon class="icon">more_vert</mat-icon>
+                <div *ngIf="widget.hover" class="panel-content-bottom" title="Delete">
+                    <a (click)="delete(widget, indx)" class="pull-right">
+                        <mat-icon class="icon">delete</mat-icon>
                     </a>
                     <a (click)="remove(widget, indx)" class="pull-right" title="Archive">
                         <mat-icon class="icon">archive</mat-icon>

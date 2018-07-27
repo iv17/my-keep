@@ -24,7 +24,7 @@ export class DashboardService {
       .set('search', search);
     return this.http.get<Dashboard>(`${this.baseUrl}/${id}/search`, { params: params });
   }
-  deleteAll(id : number): Observable<Dashboard> {
+  delete(id : number): Observable<Dashboard> {
     return this.http.delete<Dashboard>(`${this.baseUrl}/${id}`);
   }
 

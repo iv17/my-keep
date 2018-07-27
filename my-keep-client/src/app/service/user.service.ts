@@ -42,7 +42,7 @@ export class UserService {
     return this.http.put<User>(`${this.baseUrl}/${id}`, user, options);
   }
 
-  logout(): Observable<any> {
+  logout() {
     console.log('logout');
     return this.http.get(`${this.baseUrl}/logout`);
   }

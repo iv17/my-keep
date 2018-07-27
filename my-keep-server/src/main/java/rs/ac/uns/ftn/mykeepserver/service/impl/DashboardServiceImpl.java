@@ -29,6 +29,23 @@ public class DashboardServiceImpl implements DashboardService {
 		return dashboardRepository.findById(id);
 	}
 
+	public Dashboard save(int id, Dashboard request) {
+		Dashboard dashboard = findById(id);
+		
+		if(!dashboard.getWidgets().equals(request.getWidgets())) {
+			if(dashboard.getWidgets().isEmpty()) {
+				for (Widget widget : request.getWidgets()) {
+					widget.setDashboard(dashboard);
+					dashboard.getWidgets().add(widget);
+				}
+				dashboardRepository.save(dashboard);
+				return dashboard;
+
+			} 
+		}
+		return dashboard;
+	}
+	
 	@Override
 	public Dashboard update(int id, Dashboard request) {
 

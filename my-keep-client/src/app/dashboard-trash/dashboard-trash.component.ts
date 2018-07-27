@@ -178,7 +178,7 @@ export class DashboardTrashComponent implements OnInit {
   }
 
   public deleteAllForever(gridster: GridsterComponent) {
-    this.dashboardService.deleteAll(this.trashID)
+    this.dashboardService.delete(this.trashID)
       .subscribe(
         data => {
           this.trash = [];

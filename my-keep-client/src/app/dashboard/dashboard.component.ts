@@ -82,11 +82,15 @@ export class DashboardComponent implements OnInit {
     
     notes: Array<any>;
     archive: Array<any>;
+    trash: Array<any>;
 
     notesID = -1;
     archiveID = -1;
-    notesDTO = { widgets: [], type: '' };
-    archiveDTO = { widgets: [], type: '' };
+    trashID = -1;
+
+    notesDTO = { widgets: [], type: DashboardType.NOTES };
+    archiveDTO = { widgets: [], type: DashboardType.ARCHIVE };
+    trashDTO = { widgets: [], type: DashboardType.TRASH };
 
     open: boolean = false;
 
@@ -141,8 +145,7 @@ export class DashboardComponent implements OnInit {
         this.counter1 = 0;
 
         this.notesDTO.widgets = JSON.parse(localStorage.getItem('notes'));
-        this.notesDTO.type = DashboardType.NOTES.toString();
-
+        
         this.dashboardService.update(this.notesID, this.notesDTO)
             .subscribe(
                 data => {
@@ -160,14 +163,31 @@ export class DashboardComponent implements OnInit {
         this.counter2 = 0;
 
         this.archiveDTO.widgets = JSON.parse(localStorage.getItem('archive'));
-        this.archiveDTO.type = DashboardType.ARCHIVE.toString();
-
+       
         this.dashboardService.changeDashboard(this.archiveID, this.archiveDTO)
             .subscribe(
                 data => {
                     localStorage.removeItem('archive');
                     localStorage.setItem('archive', JSON.stringify(data.widgets));
                     this.archive = data.widgets;
+                },
+                error => {
+                    console.log(error);
+                }
+            )
+    }
+
+    public moveToTrash() {
+        this.counter2 = 0;
+
+        this.trashDTO.widgets = JSON.parse(localStorage.getItem('archive'));
+       
+        this.dashboardService.changeDashboard(this.trashID, this.trashDTO)
+            .subscribe(
+                data => {
+                    localStorage.removeItem('trash');
+                    localStorage.setItem('trash', JSON.stringify(data.widgets));
+                    this.trash = data.widgets;
                 },
                 error => {
                     console.log(error);
@@ -285,6 +305,34 @@ export class DashboardComponent implements OnInit {
         });
         localStorage.removeItem('archive');
         localStorage.setItem('archive', JSON.stringify(this.archive));
+        this.notes.splice(index, 1);
+        localStorage.removeItem('notes');
+        localStorage.setItem('notes', JSON.stringify(this.notes));
+        this.counter2++;
+    }
+
+    public delete(widget: Widget, index: number) {
+        this.trash.unshift({
+            id: widget.id,
+            x: widget.x, y: widget.y,
+            xSm: widget.xSm, ySm: widget.ySm,
+            xMd: widget.xMd, yMd: widget.yMd,
+            xLg: widget.xLg, yLg: widget.yLg,
+            xXl: widget.xXl, yXl: widget.yXl,
+            w: widget.w, h: widget.h,
+            wSm: widget.wSm, hSm: widget.hSm,
+            wMd: widget.wMd, hMd: widget.hMd,
+            wLg: widget.wLg, hLg: widget.hLg,
+            wXl: widget.wXl, hXl: widget.hXl,
+            title: widget.title,
+            content: widget.content,
+            dragAndDrop: true,
+            resizable: true,
+            date: widget.date,
+            dashboardId: this.trashID
+        });
+        localStorage.removeItem('trash');
+        localStorage.setItem('trash', JSON.stringify(this.trash));
         this.notes.splice(index, 1);
         localStorage.removeItem('notes');
         localStorage.setItem('notes', JSON.stringify(this.notes));

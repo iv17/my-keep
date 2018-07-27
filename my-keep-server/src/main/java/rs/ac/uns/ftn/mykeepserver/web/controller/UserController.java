@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.mykeepserver.converter.DashboardConverter;
 import rs.ac.uns.ftn.mykeepserver.converter.UserConverter;
 import rs.ac.uns.ftn.mykeepserver.exceptions.BadRequestException;
-import rs.ac.uns.ftn.mykeepserver.exceptions.NotFoundException;
 import rs.ac.uns.ftn.mykeepserver.model.User;
 import rs.ac.uns.ftn.mykeepserver.security.TokenUtils;
 import rs.ac.uns.ftn.mykeepserver.service.DashboardService;
@@ -96,38 +94,29 @@ public class UserController {
 			)
 	public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
 
-		try {
-			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
-			Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+		Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
-			UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-			String token = this.tokenUtils.generateToken(userDetails);
-			LoginResponseDTO response = new LoginResponseDTO();
-
-			User user = userService.findByEmail(request.getEmail());
-			UserDTO userDTO = userConverter.convert(user);
-			response.setUser(userDTO);
-			response.setToken(token);
-
-			return new ResponseEntity<LoginResponseDTO>(response, HttpStatus.OK);
-
-		} catch (BadCredentialsException e) {
-			throw new NotFoundException("Wrong email or password!"); 
-		}
+		UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+		String token = this.tokenUtils.generateToken(userDetails);
+		User user = userService.findByEmail(request.getEmail());
+		
+		LoginResponseDTO response = userConverter.convert(user, token);
+	
+		return new ResponseEntity<LoginResponseDTO>(response, HttpStatus.OK);
 
 	}
 
 	@RequestMapping(value = "/logout",
-			method = RequestMethod.GET,
-			produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> logoutUser() {
+			method = RequestMethod.GET)
+	public ResponseEntity<Void> logoutUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)){
 			SecurityContextHolder.clearContext();
-			return new ResponseEntity<String>("You are successfuly logged out!", HttpStatus.OK);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} else {
 			throw new BadRequestException("User is not authenticated!");
 		}
@@ -161,7 +150,7 @@ public class UserController {
 
 		userValidationService.validateIfUserExist(authentication);		
 		userValidationService.validateIfPasswordMatch(request.getNewPassword(), request.getRepeatedNewPassword());
-		
+
 		User user = userService.changePassword(id, request.getNewPassword());
 		UserDTO response =  userConverter.convert(user);
 
