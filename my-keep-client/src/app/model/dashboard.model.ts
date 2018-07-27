@@ -1,14 +1,14 @@
 import { Widget } from "./widget.model";
-import { DashboardStatus } from "./dashboardStatus.model";
+import { DashboardType } from "./dashboardType.model";
 
 export class Dashboard {
     id: number;
-    status: DashboardStatus;
+    type: DashboardType;
     widgets: Array<Widget>;
 
     constructor(inter: DashboardInterface = {}) {
         this.id = inter.id;
-        this.status = inter.status;
+        this.type = inter.type;
         this.widgets = inter.widgets;
        
     }
@@ -16,6 +16,6 @@ export class Dashboard {
 
 interface DashboardInterface {
     id?: number;
-    status?: DashboardStatus;
+    type?: DashboardType;
     widgets?: Array<Widget>;
 }

@@ -24,8 +24,8 @@ public class Dashboard implements Serializable {
 	@Column(name = "id", nullable = false , unique = true)
 	private int id;
 
-	@Column(name = "status")
-	private DashboardStatus dashboardStatus;
+	@Column(name = "type")
+	private DashboardType dashboardType;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "dashboard")
 	private Set<Widget> widgets;
@@ -42,12 +42,12 @@ public class Dashboard implements Serializable {
 		this.id = id;
 	}
 
-	public DashboardStatus getDashboardStatus() {
-		return dashboardStatus;
+	public DashboardType getDashboardType() {
+		return dashboardType;
 	}
 
-	public void setDashboardStatus(DashboardStatus dashboardStatus) {
-		this.dashboardStatus = dashboardStatus;
+	public void setDashboardType(DashboardType dashboardType) {
+		this.dashboardType = dashboardType;
 	}
 
 	public Set<Widget> getWidgets() {

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.mykeepserver.model.Dashboard;
-import rs.ac.uns.ftn.mykeepserver.model.DashboardStatus;
 import rs.ac.uns.ftn.mykeepserver.model.Widget;
 import rs.ac.uns.ftn.mykeepserver.repository.DashboardRepository;
 import rs.ac.uns.ftn.mykeepserver.repository.WidgetRepository;
@@ -31,17 +30,6 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	@Override
-	public Dashboard save(Dashboard dashboard) {
-		return dashboardRepository.save(dashboard);
-	}
-
-	@Override
-	public Dashboard findByDashboardStatus(DashboardStatus dashboardStatus) {
-		return dashboardRepository.findByDashboardStatus(dashboardStatus);
-	}
-
-
-	@Override
 	public Dashboard update(int id, Dashboard request) {
 
 		Dashboard dashboard = findById(id);
@@ -52,7 +40,7 @@ public class DashboardServiceImpl implements DashboardService {
 					widget.setDashboard(dashboard);
 					dashboard.getWidgets().add(widget);
 				}
-				save(dashboard);
+				dashboardRepository.save(dashboard);
 				return dashboard;
 
 			} else {
@@ -61,7 +49,7 @@ public class DashboardServiceImpl implements DashboardService {
 						widget.setDashboard(dashboard);
 						dashboard.getWidgets().add(widget);
 
-						save(dashboard);
+						dashboardRepository.save(dashboard);
 					} 
 				}
 
@@ -95,7 +83,7 @@ public class DashboardServiceImpl implements DashboardService {
 							w.sethXl(widget.gethXl());
 						} 
 					} 
-					save(dashboard);
+					dashboardRepository.save(dashboard);
 
 				}
 				return dashboard;
@@ -114,7 +102,7 @@ public class DashboardServiceImpl implements DashboardService {
 				widget.setDashboard(dashboard);
 				dashboard.getWidgets().add(widget);
 			}
-			save(dashboard);
+			dashboardRepository.save(dashboard);
 			return dashboard;
 
 		} else {
@@ -125,7 +113,7 @@ public class DashboardServiceImpl implements DashboardService {
 			for (Object o : result) {
 				Widget widget = (Widget) o;
 				dashboard.getWidgets().add(widget);
-				save(dashboard);
+				dashboardRepository.save(dashboard);
 			}
 		}
 
@@ -136,7 +124,7 @@ public class DashboardServiceImpl implements DashboardService {
 	public Dashboard clearDashboard(int id) {
 		Dashboard dashboard = findById(id);
 		dashboard.getWidgets().clear();
-		save(dashboard);
+		dashboardRepository.save(dashboard);
 
 		return dashboard;
 	}

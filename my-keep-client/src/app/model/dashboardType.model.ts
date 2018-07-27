@@ -1,4 +1,4 @@
-export enum DashboardStatus {
+export enum DashboardType {
     NOTES, ARCHIVE, TRASH
   }
   

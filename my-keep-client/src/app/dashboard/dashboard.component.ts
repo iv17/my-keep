@@ -4,7 +4,7 @@ import { DashboardService } from '../service/dashboard.service';
 import { MatDialog } from '@angular/material';
 import { WidgetUpdateComponent } from '../widget-update/widget-update.component';
 import { Widget } from '../model/widget.model';
-import { DashboardStatus } from '../model/dashboardStatus.model';
+import { DashboardType } from '../model/dashboardType.model';
 import { interval } from 'rxjs';
 
 @Component({
@@ -85,8 +85,8 @@ export class DashboardComponent implements OnInit {
 
     notesID = -1;
     archiveID = -1;
-    notesDTO = { widgets: [], status: '' };
-    archiveDTO = { widgets: [], status: '' };
+    notesDTO = { widgets: [], type: '' };
+    archiveDTO = { widgets: [], type: '' };
 
     open: boolean = false;
 
@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit {
         this.counter1 = 0;
 
         this.notesDTO.widgets = JSON.parse(localStorage.getItem('notes'));
-        this.notesDTO.status = DashboardStatus.NOTES.toString();
+        this.notesDTO.type = DashboardType.NOTES.toString();
 
         this.dashboardService.update(this.notesID, this.notesDTO)
             .subscribe(
@@ -160,7 +160,7 @@ export class DashboardComponent implements OnInit {
         this.counter2 = 0;
 
         this.archiveDTO.widgets = JSON.parse(localStorage.getItem('archive'));
-        this.archiveDTO.status = DashboardStatus.ARCHIVE.toString();
+        this.archiveDTO.type = DashboardType.ARCHIVE.toString();
 
         this.dashboardService.changeDashboard(this.archiveID, this.archiveDTO)
             .subscribe(

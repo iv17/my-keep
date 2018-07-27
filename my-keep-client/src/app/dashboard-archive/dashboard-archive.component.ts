@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { GridsterComponent, IGridsterOptions, IGridsterDraggableOptions } from 'angular2gridster';
 import { DashboardService } from '../service/dashboard.service';
-import { DashboardStatus } from '../model/dashboardStatus.model';
+import { DashboardType } from '../model/dashboardType.model';
 import { Widget } from '../model/widget.model';
 import { interval } from 'rxjs';
 
@@ -85,9 +85,8 @@ export class DashboardArchiveComponent implements OnInit {
   notesID = -1;
   archiveID = -1;
   trashID = -1;
-  notesDTO = { widgets: [], status: '' };
-  archiveDTO = { widgets: [], status: '' };
-  trashDTO = { widgets: [], status: '' };
+  notesDTO = { widgets: [], type: '' };
+  trashDTO = { widgets: [], type: '' };
 
   open: boolean = false;
 
@@ -131,7 +130,7 @@ export class DashboardArchiveComponent implements OnInit {
     this.counter1 = 0;
 
     this.notesDTO.widgets = JSON.parse(localStorage.getItem('notes'));
-    this.notesDTO.status = DashboardStatus.NOTES.toString();
+    this.notesDTO.type = DashboardType.NOTES.toString();
 
     this.dashboardService.changeDashboard(this.notesID, this.notesDTO)
       .subscribe(
@@ -150,7 +149,7 @@ export class DashboardArchiveComponent implements OnInit {
     this.counter2 = 0;
 
     this.trashDTO.widgets = JSON.parse(localStorage.getItem('trash'));
-    this.trashDTO.status = DashboardStatus.TRASH.toString();
+    this.trashDTO.type = DashboardType.TRASH.toString();
 
     this.dashboardService.changeDashboard(this.trashID, this.trashDTO)
       .subscribe(

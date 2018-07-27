@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import rs.ac.uns.ftn.mykeepserver.model.Dashboard;
-import rs.ac.uns.ftn.mykeepserver.model.DashboardStatus;
+import rs.ac.uns.ftn.mykeepserver.model.DashboardType;
 import rs.ac.uns.ftn.mykeepserver.model.User;
 import rs.ac.uns.ftn.mykeepserver.web.dto.LoginRequestDTO;
 import rs.ac.uns.ftn.mykeepserver.web.dto.LoginResponseDTO;
@@ -56,11 +56,11 @@ public class UserConverter {
 		user.setPassword(encoder.encode(dto.getPassword()));
 		
 		Dashboard notesDasboard = new Dashboard();
-		notesDasboard.setDashboardStatus(DashboardStatus.NOTES);
+		notesDasboard.setDashboardType(DashboardType.NOTES);
 		Dashboard archiveDashboard = new Dashboard();
-		archiveDashboard.setDashboardStatus(DashboardStatus.ARCHIVE);
+		archiveDashboard.setDashboardType(DashboardType.ARCHIVE);
 		Dashboard trashDashboard = new Dashboard();
-		trashDashboard.setDashboardStatus(DashboardStatus.TRASH);
+		trashDashboard.setDashboardType(DashboardType.TRASH);
 		
 		user.setNotesDashboard(notesDasboard);
 		user.setArchiveDashboard(archiveDashboard);

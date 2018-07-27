@@ -115,37 +115,6 @@ public class Widget implements Serializable {
 		super();
 	}
 
-	public Widget(String title, String content, Date date, boolean dragAndDrop, boolean resizable, int x, int y, int w,
-			int h, int xSm, int ySm, int wSm, int hSm, int xMd, int yMd, int wMd, int hMd, int xLg, int yLg, int wLg,
-			int hLg, int xXl, int yXl, int wXl, int hXl) {
-		super();
-		this.title = title;
-		this.content = content;
-		this.date = date;
-		this.dragAndDrop = dragAndDrop;
-		this.resizable = resizable;
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-		this.xSm = xSm;
-		this.ySm = ySm;
-		this.wSm = wSm;
-		this.hSm = hSm;
-		this.xMd = xMd;
-		this.yMd = yMd;
-		this.wMd = wMd;
-		this.hMd = hMd;
-		this.xLg = xLg;
-		this.yLg = yLg;
-		this.wLg = wLg;
-		this.hLg = hLg;
-		this.xXl = xXl;
-		this.yXl = yXl;
-		this.wXl = wXl;
-		this.hXl = hXl;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -474,7 +443,7 @@ public class Widget implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Widget [id=" + id + ", title=" + title + ", content=" + content + ", dashboard=" + dashboard.getDashboardStatus() + "]";
+		return "Widget [id=" + id + ", title=" + title + ", content=" + content + ", dashboard=" + dashboard.getDashboardType() + "]";
 	}
 
 }

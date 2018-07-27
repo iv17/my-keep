@@ -2,12 +2,12 @@ package rs.ac.uns.ftn.mykeepserver.web.dto;
 
 import java.util.List;
 
-import rs.ac.uns.ftn.mykeepserver.model.DashboardStatus;
+import rs.ac.uns.ftn.mykeepserver.model.DashboardType;
 
 public class DashboardDTO {
 	
 	private int id;
-	private DashboardStatus status;
+	private DashboardType type;
 	private List<WidgetDTO> widgets;	
 	
 	public int getId() {
@@ -18,12 +18,12 @@ public class DashboardDTO {
 		this.id = id;
 	}
 
-	public DashboardStatus getStatus() {
-		return status;
+	public DashboardType getType() {
+		return type;
 	}
 
-	public void setStatus(DashboardStatus status) {
-		this.status = status;
+	public void setType(DashboardType type) {
+		this.type = type;
 	}
 
 	public List<WidgetDTO> getWidgets() {
