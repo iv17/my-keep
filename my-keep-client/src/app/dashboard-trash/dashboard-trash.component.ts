@@ -4,6 +4,7 @@ import { DashboardService } from '../service/dashboard.service';
 import { DashboardType } from '../model/dashboardType.model';
 import { Widget } from '../model/widget.model';
 import { interval } from 'rxjs';
+import { Dashboard } from '../model/dashboard.model';
 
 @Component({
   selector: 'app-dashboard-trash',
@@ -87,7 +88,7 @@ export class DashboardTrashComponent implements OnInit {
   archiveID = -1;
   trashID = -1;
   
-  archiveDTO = { widgets: [], type: '' };
+  archiveDTO: Dashboard = new Dashboard();
  
   open: boolean = false;
 
@@ -114,7 +115,7 @@ export class DashboardTrashComponent implements OnInit {
     this.counter1 = 0;
 
     this.archiveDTO.widgets = JSON.parse(localStorage.getItem('archive'));
-    this.archiveDTO.type = DashboardType.ARCHIVE.toString();
+    this.archiveDTO.type = DashboardType.ARCHIVE;
 
     this.dashboardService.changeDashboard(this.archiveID, this.archiveDTO)
       .subscribe(

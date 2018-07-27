@@ -6,6 +6,7 @@ import { WidgetUpdateComponent } from '../widget-update/widget-update.component'
 import { Widget } from '../model/widget.model';
 import { DashboardType } from '../model/dashboardType.model';
 import { interval } from 'rxjs';
+import { Dashboard } from '../model/dashboard.model';
 
 @Component({
     selector: 'app-dashboard',
@@ -79,7 +80,7 @@ export class DashboardComponent implements OnInit {
     gridsterDraggableOptions: IGridsterDraggableOptions = {
         handlerClass: 'panel-heading'
     };
-    
+
     notes: Array<any>;
     archive: Array<any>;
     trash: Array<any>;
@@ -88,9 +89,9 @@ export class DashboardComponent implements OnInit {
     archiveID = -1;
     trashID = -1;
 
-    notesDTO = { widgets: [], type: DashboardType.NOTES };
-    archiveDTO = { widgets: [], type: DashboardType.ARCHIVE };
-    trashDTO = { widgets: [], type: DashboardType.TRASH };
+    notesDTO: Dashboard = new Dashboard();
+    archiveDTO: Dashboard = new Dashboard();
+    trashDTO: Dashboard = new Dashboard();
 
     open: boolean = false;
 
@@ -101,6 +102,7 @@ export class DashboardComponent implements OnInit {
 
     counter1: number = 0;
     counter2: number = 0;
+    counter3: number = 0;
 
     check1 = interval(10000)
         .subscribe((val) => {
@@ -116,12 +118,21 @@ export class DashboardComponent implements OnInit {
                 this.moveToArchive();
             }
         });
+    check3 = interval(10000)
+        .subscribe((val) => {
+            if (this.counter3 > 0) {
+                console.log(this.counter3);
+                this.moveToTrash();
+            }
+        });
 
     ngOnInit() {
         this.notes = JSON.parse(localStorage.getItem('notes'));
         this.archive = JSON.parse(localStorage.getItem('archive'));
+        this.trash = JSON.parse(localStorage.getItem('trash'));
         this.notesID = JSON.parse(localStorage.getItem('notesID'));
         this.archiveID = JSON.parse(localStorage.getItem('archiveID'));
+        this.trashID = JSON.parse(localStorage.getItem('trashID'));
     }
 
     constructor(
@@ -145,7 +156,8 @@ export class DashboardComponent implements OnInit {
         this.counter1 = 0;
 
         this.notesDTO.widgets = JSON.parse(localStorage.getItem('notes'));
-        
+        this.notesDTO.type = DashboardType.NOTES;
+
         this.dashboardService.update(this.notesID, this.notesDTO)
             .subscribe(
                 data => {
@@ -163,7 +175,8 @@ export class DashboardComponent implements OnInit {
         this.counter2 = 0;
 
         this.archiveDTO.widgets = JSON.parse(localStorage.getItem('archive'));
-       
+        this.archiveDTO.type = DashboardType.ARCHIVE;
+
         this.dashboardService.changeDashboard(this.archiveID, this.archiveDTO)
             .subscribe(
                 data => {
@@ -178,10 +191,11 @@ export class DashboardComponent implements OnInit {
     }
 
     public moveToTrash() {
-        this.counter2 = 0;
+        this.counter3 = 0;
 
-        this.trashDTO.widgets = JSON.parse(localStorage.getItem('archive'));
-       
+        this.trashDTO.widgets = JSON.parse(localStorage.getItem('trash'));
+        this.trashDTO.type = DashboardType.TRASH;
+
         this.dashboardService.changeDashboard(this.trashID, this.trashDTO)
             .subscribe(
                 data => {
@@ -209,7 +223,7 @@ export class DashboardComponent implements OnInit {
         }
     }
 
-    public openDialog(widget: Widget, gridster: GridsterComponent): void {
+    public openDialog(widget: Widget): void {
         const dialogRef = this.dialog.open(WidgetUpdateComponent, {
             data: { title: widget.title, content: widget.content }
         });
@@ -219,26 +233,22 @@ export class DashboardComponent implements OnInit {
             localStorage.removeItem('notes');
             localStorage.setItem('notes', JSON.stringify(this.notes));
             this.counter1++;
-            //gridster.reload();
-            
         });
 
     }
 
-    public pin(widget: Widget, gridster: GridsterComponent): void {
+    public pin(widget: Widget): void {
         widget.dragAndDrop = false;
         localStorage.removeItem('notes');
         localStorage.setItem('notes', JSON.stringify(this.notes));
         this.counter1++;
-        //gridster.reload();
     }
 
-    public unpin(widget: Widget, gridster: GridsterComponent): void {
+    public unpin(widget: Widget): void {
         widget.dragAndDrop = true;
         localStorage.removeItem('notes');
         localStorage.setItem('notes', JSON.stringify(this.notes));
         this.counter1++;
-        //gridster.reload();
     }
 
     public addWidgetWithData($event) {
@@ -336,7 +346,7 @@ export class DashboardComponent implements OnInit {
         this.notes.splice(index, 1);
         localStorage.removeItem('notes');
         localStorage.setItem('notes', JSON.stringify(this.notes));
-        this.counter2++;
+        this.counter3++;
     }
 
     public removeAllWidgets() {

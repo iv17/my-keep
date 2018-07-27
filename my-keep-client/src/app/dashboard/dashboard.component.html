@@ -104,15 +104,15 @@
 
             <div class="panel-heading">
                 <div class="panel-title">{{ widget.title }}
-                    <a *ngIf="widget.dragAndDrop" (click)="pin(widget, gridster2)" class="pull-right" title="Pin it">
+                    <a *ngIf="widget.dragAndDrop" (click)="pin(widget)" class="pull-right" title="Pin it">
                         <mat-icon class="icon">bookmark_border</mat-icon>
                     </a>
-                    <a *ngIf="!widget.dragAndDrop" (click)="unpin(widget, gridster2)" class="pull-right" title="Unpin">
+                    <a *ngIf="!widget.dragAndDrop" (click)="unpin(widget)" class="pull-right" title="Unpin">
                         <mat-icon class="icon">bookmark</mat-icon>
                     </a>
                 </div>
             </div>
-            <div class="panel-body" (click)="openDialog(widget, gridster2)" (mouseover)="onhover(widget)" (mouseleave)="onleave(widget)">
+            <div class="panel-body" (click)="openDialog(widget)" (mouseover)="onhover(widget)" (mouseleave)="onleave(widget)">
                 <small> {{widget.date | date: "dd.MM.y HH:mm"}}</small>
                 <br>
                 <div class="panel-content">{{ widget.content }}</div>

@@ -13,7 +13,7 @@ export class DashboardService {
   getDashboard(id : number): Observable<Dashboard> {
     return this.http.get<Dashboard>(`${this.baseUrl}/${id}`);
   }
-  update(id : number, dashboard): Observable<Dashboard> { 
+  update(id : number, dashboard: Dashboard): Observable<Dashboard> { 
     return this.http.put<Dashboard>(`${this.baseUrl}/${id}`, dashboard);
   }
   changeDashboard(id : number, dashboard): Observable<Dashboard> { 
