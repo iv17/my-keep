@@ -36,18 +36,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User changePassword(int id, String newPassword) {
+	public User changePassword(String email, String newPassword) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		User user = findById(id);
+		User user = findByEmail(email);
 		user.setPassword(encoder.encode(newPassword));
 		save(user);
 		return user;
 	}
 
 	@Override
-	public User update(int id, User request) {
+	public User update(String email, User request) {
 		
-		User user = findById(id);
+		User user = findByEmail(email);
 		user.setFirstName(request.getFirstName());
 		user.setLastName(request.getLastName());
 		save(user);

@@ -2,22 +2,16 @@ package rs.ac.uns.ftn.mykeepserver.web.dto;
 
 public class UserDTO {
 
-	private int id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private DashboardDTO notesDashboard;
 	private DashboardDTO archiveDashboard;
-	private DashboardDTO trashBashboard;
+	private DashboardDTO trashDashboard;
+	private int notesId;
+	private int archiveId;
+	private int trashId;
 
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -59,12 +53,36 @@ public class UserDTO {
 		this.archiveDashboard = archiveDashboard;
 	}
 
-	public DashboardDTO getTrashBashboard() {
-		return trashBashboard;
+	public DashboardDTO getTrashDashboard() {
+		return trashDashboard;
 	}
 
-	public void setTrashBashboard(DashboardDTO trashBashboard) {
-		this.trashBashboard = trashBashboard;
+	public void setTrashDashboard(DashboardDTO trashDashboard) {
+		this.trashDashboard = trashDashboard;
 	}
-	
+
+	public int getNotesId() {
+		return notesId;
+	}
+
+	public void setNotesId(int notesId) {
+		this.notesId = notesId;
+	}
+
+	public int getArchiveId() {
+		return archiveId;
+	}
+
+	public void setArchiveId(int archiveId) {
+		this.archiveId = archiveId;
+	}
+
+	public int getTrashId() {
+		return trashId;
+	}
+
+	public void setTrashId(int trashId) {
+		this.trashId = trashId;
+	}
+
 }

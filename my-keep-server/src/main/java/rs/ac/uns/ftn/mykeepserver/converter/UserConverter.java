@@ -32,14 +32,7 @@ public class UserConverter {
 	}
 	
 	public LoginResponseDTO convert(User user, String token) {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setFirstName(user.getFirstName());
-		userDTO.setLastName(user.getLastName());
-		userDTO.setEmail(user.getEmail());
-		userDTO.setNotesDashboard(dashboardConverter.convert(user.getNotesDashboard()));
-		userDTO.setArchiveDashboard(dashboardConverter.convert(user.getArchiveDashboard()));
-		userDTO.setTrashBashboard(dashboardConverter.convert(user.getTrashDashboard()));
-		
+		UserDTO userDTO = convert(user);	
 		LoginResponseDTO dto = new LoginResponseDTO();
 		dto.setUser(userDTO);
 		dto.setToken(token);
@@ -71,14 +64,16 @@ public class UserConverter {
 	
 	public UserDTO convert(User user) {
 		UserDTO dto = new UserDTO();
-		dto.setId(user.getId());
 		dto.setFirstName(user.getFirstName());
 		dto.setLastName(user.getLastName());
 		dto.setEmail(user.getEmail());
 			
 		dto.setNotesDashboard(dashboardConverter.convert(user.getNotesDashboard()));
 		dto.setArchiveDashboard(dashboardConverter.convert(user.getArchiveDashboard()));
-		dto.setTrashBashboard(dashboardConverter.convert(user.getTrashDashboard()));
+		dto.setTrashDashboard(dashboardConverter.convert(user.getTrashDashboard()));
+		dto.setNotesId(user.getNotesDashboard().getId());
+		dto.setArchiveId(user.getArchiveDashboard().getId());
+		dto.setTrashId(user.getTrashDashboard().getId());
 		
 		return dto;
 	}

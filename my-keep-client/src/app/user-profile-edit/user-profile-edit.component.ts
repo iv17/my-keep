@@ -22,7 +22,7 @@ export class UserProfileEditComponent implements OnInit {
   }
 
   edit() {
-    this.service.update(this.user.id, this.user)
+    this.service.update(this.user.email, this.user)
     .subscribe((data) => {
       this.user = data;
       this.router.navigateByUrl('/home/profile');

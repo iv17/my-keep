@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { IGridsterOptions, IGridsterDraggableOptions, GridsterComponent } from 'angular2gridster';
 import { DashboardService } from '../service/dashboard.service';
-import { DashboardType } from '../model/dashboardType.model';
 import { Widget } from '../model/widget.model';
 import { interval } from 'rxjs';
 import { Dashboard } from '../model/dashboard.model';
@@ -115,7 +114,6 @@ export class DashboardTrashComponent implements OnInit {
     this.counter1 = 0;
 
     this.archiveDTO.widgets = JSON.parse(localStorage.getItem('archive'));
-    this.archiveDTO.type = DashboardType.ARCHIVE;
 
     this.dashboardService.changeDashboard(this.archiveID, this.archiveDTO)
       .subscribe(
@@ -143,7 +141,8 @@ export class DashboardTrashComponent implements OnInit {
       content: widget.content,
       dragAndDrop: true,
       resizable: true,
-      date: widget.date
+      date: widget.date,
+      dashboardId: this.archiveID
     });
     localStorage.removeItem('archive');
     localStorage.setItem('archive', JSON.stringify(this.archive));
@@ -167,7 +166,8 @@ export class DashboardTrashComponent implements OnInit {
         content: widget.content,
         dragAndDrop: true,
         resizable: true,
-        date: widget.date
+        date: widget.date,
+        dashboardId: this.archiveID
       });
     });
     localStorage.removeItem('archive');

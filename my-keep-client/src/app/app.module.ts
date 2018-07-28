@@ -27,7 +27,7 @@ import { UserProfileEditComponent } from './user-profile-edit/user-profile-edit.
 const routes: Routes = [
   {
     path: "",
-    component: RegisterComponent
+    component: LoginComponent
   },
   {
     path: "register",
@@ -36,10 +36,6 @@ const routes: Routes = [
   {
     path: "login",
     component: LoginComponent
-  },
-  {
-    path: "profile",
-    component: RegisterComponent
   },
   {
     path: "change-password",

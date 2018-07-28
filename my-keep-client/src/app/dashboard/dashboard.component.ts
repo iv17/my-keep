@@ -4,7 +4,6 @@ import { DashboardService } from '../service/dashboard.service';
 import { MatDialog } from '@angular/material';
 import { WidgetUpdateComponent } from '../widget-update/widget-update.component';
 import { Widget } from '../model/widget.model';
-import { DashboardType } from '../model/dashboardType.model';
 import { interval } from 'rxjs';
 import { Dashboard } from '../model/dashboard.model';
 
@@ -156,8 +155,7 @@ export class DashboardComponent implements OnInit {
         this.counter1 = 0;
 
         this.notesDTO.widgets = JSON.parse(localStorage.getItem('notes'));
-        this.notesDTO.type = DashboardType.NOTES;
-
+       
         this.dashboardService.update(this.notesID, this.notesDTO)
             .subscribe(
                 data => {
@@ -175,8 +173,7 @@ export class DashboardComponent implements OnInit {
         this.counter2 = 0;
 
         this.archiveDTO.widgets = JSON.parse(localStorage.getItem('archive'));
-        this.archiveDTO.type = DashboardType.ARCHIVE;
-
+       
         this.dashboardService.changeDashboard(this.archiveID, this.archiveDTO)
             .subscribe(
                 data => {
@@ -194,8 +191,7 @@ export class DashboardComponent implements OnInit {
         this.counter3 = 0;
 
         this.trashDTO.widgets = JSON.parse(localStorage.getItem('trash'));
-        this.trashDTO.type = DashboardType.TRASH;
-
+    
         this.dashboardService.changeDashboard(this.trashID, this.trashDTO)
             .subscribe(
                 data => {

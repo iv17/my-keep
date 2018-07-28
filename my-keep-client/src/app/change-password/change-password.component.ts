@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../service/user.service';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'app-change-password',
@@ -9,23 +10,23 @@ import { UserService } from '../service/user.service';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  public user = {
+  public user: User;
+  public request = {
     newPassword: "newPassword",
     repeatedNewPassword: "newPassword"
   };
 
-  userId: number;
   constructor(private service: UserService,
     private router: Router) { }
 
   ngOnInit() {
     this.service.getMe().subscribe((data) => {
-      this.userId = data.id;
+      this.user = data;
     });
   }
 
   changePassword() {
-    this.service.changePassword(this.userId, this.user).subscribe((data) => {
+    this.service.changePassword(this.user.email, this.request).subscribe((data) => {
       this.service.logout();
       this.service.removeToken();
       this.router.navigateByUrl('/login');

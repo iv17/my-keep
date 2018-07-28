@@ -24,11 +24,11 @@ export class LoginComponent implements OnInit {
     this.service.login(this.user).subscribe((data) => {
       localStorage.setItem('token', JSON.stringify(data.token));
       localStorage.setItem('notes', JSON.stringify(data.user.notesDashboard.widgets));
-      localStorage.setItem('notesID', JSON.stringify(data.user.notesDashboard.id));
+      localStorage.setItem('notesID', JSON.stringify(data.user.notesId));
       localStorage.setItem('archive', JSON.stringify(data.user.archiveDashboard.widgets));
-      localStorage.setItem('archiveID', JSON.stringify(data.user.archiveDashboard.id));
-      localStorage.setItem('trash', JSON.stringify(data.user.trashBashboard.widgets));
-      localStorage.setItem('trashID', JSON.stringify(data.user.trashBashboard.id));
+      localStorage.setItem('archiveID', JSON.stringify(data.user.archiveId));
+      localStorage.setItem('trash', JSON.stringify(data.user.trashDashboard.widgets));
+      localStorage.setItem('trashID', JSON.stringify(data.user.trashId));
   
       this.router.navigateByUrl('/home/dashboard');
     });

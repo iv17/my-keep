@@ -22,7 +22,6 @@ public class DashboardConverter {
 	//==================== UPDATE ====================
 	public Dashboard convert(DashboardDTO dto) {
 		Dashboard dashboard = new Dashboard();
-		dashboard.setDashboardType(dto.getType());
 		if(dto.getWidgets() != null) {
 			Set<Widget> widgets = new HashSet<>();
 			for (WidgetDTO widgetDTO : dto.getWidgets()) {
@@ -37,8 +36,6 @@ public class DashboardConverter {
 	
 	public DashboardDTO convert(Dashboard dashboard) {
 		DashboardDTO dto = new DashboardDTO();
-		dto.setType(dashboard.getDashboardType());
-		dto.setId(dashboard.getId());
 		if(dashboard.getWidgets() != null) {
 			List<WidgetDTO> widgets = new ArrayList<>();
 			for (Widget widget : dashboard.getWidgets()) {

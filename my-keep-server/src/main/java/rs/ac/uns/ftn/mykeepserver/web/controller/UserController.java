@@ -141,17 +141,17 @@ public class UserController {
 
 
 	@RequestMapping(
-			value = "/{id}",
+			value = "/{email}",
 			method = RequestMethod.PATCH,
 			consumes = MediaType.APPLICATION_JSON_VALUE, 
 			produces = MediaType.APPLICATION_JSON_VALUE
 			)
-	public ResponseEntity<UserDTO> changePassword(@PathVariable int id, @RequestBody ChangePasswordRequestDTO request, Authentication authentication) {
+	public ResponseEntity<UserDTO> changePassword(@PathVariable String email, @RequestBody ChangePasswordRequestDTO request, Authentication authentication) {
 
 		userValidationService.validateIfUserExist(authentication);		
 		userValidationService.validateIfPasswordMatch(request.getNewPassword(), request.getRepeatedNewPassword());
 
-		User user = userService.changePassword(id, request.getNewPassword());
+		User user = userService.changePassword(email, request.getNewPassword());
 		UserDTO response =  userConverter.convert(user);
 
 		return new ResponseEntity<UserDTO>(response, HttpStatus.CREATED);
@@ -159,16 +159,16 @@ public class UserController {
 
 
 	@RequestMapping(
-			value = "/{id}",
+			value = "/{email}",
 			method = RequestMethod.PUT
 			)
-	public ResponseEntity<UserDTO> update(@PathVariable int id, @RequestBody UpdateUserRequestDTO request, Authentication authentication) {
+	public ResponseEntity<UserDTO> update(@PathVariable String email,@RequestBody UpdateUserRequestDTO request, Authentication authentication) {
 
 		userValidationService.validateIfUserExist(authentication);
 
 		User user =  userConverter.convert(request);
 
-		User updatedUser = userService.update(id, user);
+		User updatedUser = userService.update(email, user);
 
 		UserDTO response =  userConverter.convert(updatedUser);
 
