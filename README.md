@@ -7,4 +7,4 @@ Koriscene tehnologije:
 - Spring Boot
 - Hibernate
 - Angular 6
-- Gridster library https://github.com/swiety85/angular2gridster
+- Gridster https://github.com/swiety85/angular2gridster
